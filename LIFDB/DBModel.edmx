@@ -1,0 +1,837 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LIF2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="effects">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Effect_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ResultPreparationID" Type="int" />
+          <Property Name="ResultPotionID" Type="int" />
+          <Property Name="PlayerEffectID" Type="smallint" />
+        </EntityType>
+        <EntityType Name="effects_sets">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EffectID1" Type="smallint" Nullable="false" />
+          <Property Name="EffectID2" Type="smallint" />
+          <Property Name="EffectID3" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="objects_types">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="IsContainer" Type="smallint" Nullable="false" />
+          <Property Name="IsMovableObject" Type="smallint" Nullable="false" />
+          <Property Name="IsUnmovableobject" Type="smallint" Nullable="false" />
+          <Property Name="IsTool" Type="smallint" Nullable="false" />
+          <Property Name="IsDevice" Type="smallint" Nullable="false" />
+          <Property Name="IsDoor" Type="smallint" Nullable="false" />
+          <Property Name="MaxContSize" Type="int" />
+          <Property Name="Length" Type="smallint" />
+          <Property Name="MaxStackSize" Type="int" />
+          <Property Name="UnitWeight" Type="int" />
+          <Property Name="BackgndImage" Type="varchar" MaxLength="250" />
+          <Property Name="WorkAreaTop" Type="smallint" />
+          <Property Name="WorkAreaLeft" Type="smallint" />
+          <Property Name="WorkAreaWidth" Type="smallint" />
+          <Property Name="WorkAreaHeight" Type="smallint" />
+          <Property Name="BtnCloseTop" Type="smallint" />
+          <Property Name="BtnCloseLeft" Type="smallint" />
+          <Property Name="FaceImage" Type="varchar" MaxLength="250" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="BasePrice" Type="int" />
+          <Property Name="OwnerTimeout" Type="int" />
+        </EntityType>
+        <EntityType Name="recipe">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
+          <Property Name="StartingToolsID" Type="int" />
+          <Property Name="SkillTypeID" Type="int" />
+          <Property Name="SkillLvl" Type="smallint" />
+          <Property Name="ResultObjectTypeID" Type="int" />
+          <Property Name="SkillDepends" Type="smallint" Nullable="false" />
+          <Property Name="Quantity" Type="smallint" Nullable="false" />
+          <Property Name="Autorepeat" Type="smallint" Nullable="false" />
+          <Property Name="IsBlueprint" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="recipe_possible_blueprints">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecipeID" Type="int" Nullable="false" />
+          <Property Name="BaseRecipeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="recipe_requirement">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RecipeID" Type="int" />
+          <Property Name="MaterialObjectTypeID" Type="int" />
+          <Property Name="Quality" Type="smallint" />
+          <Property Name="Influence" Type="smallint" />
+          <Property Name="Quantity" Type="smallint" />
+          <Property Name="IsRegionItemRequired" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="skill_type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Parent" Type="int" />
+          <Property Name="Group" Type="smallint" />
+          <Property Name="PrimaryStat" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="SecondaryStat" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="MasterMessageID" Type="int" />
+          <Property Name="GMMessageID" Type="int" />
+        </EntityType>
+        <Association Name="FK_effects_result_potion_objects_types">
+          <End Role="objects_types" Type="Self.objects_types" Multiplicity="0..1" />
+          <End Role="effects" Type="Self.effects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects_types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="effects">
+              <PropertyRef Name="ResultPotionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_effects_result_preparation_objects_types">
+          <End Role="objects_types" Type="Self.objects_types" Multiplicity="0..1" />
+          <End Role="effects" Type="Self.effects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects_types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="effects">
+              <PropertyRef Name="ResultPreparationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_effects_sets_effects_1">
+          <End Role="effects" Type="Self.effects" Multiplicity="1" />
+          <End Role="effects_sets" Type="Self.effects_sets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="effects">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="effects_sets">
+              <PropertyRef Name="EffectID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_effects_sets_effects_2">
+          <End Role="effects" Type="Self.effects" Multiplicity="0..1" />
+          <End Role="effects_sets" Type="Self.effects_sets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="effects">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="effects_sets">
+              <PropertyRef Name="EffectID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_effects_sets_effects_3">
+          <End Role="effects" Type="Self.effects" Multiplicity="1" />
+          <End Role="effects_sets" Type="Self.effects_sets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="effects">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="effects_sets">
+              <PropertyRef Name="EffectID3" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_possible_blueprints_baserecipe">
+          <End Role="recipe" Type="Self.recipe" Multiplicity="1" />
+          <End Role="recipe_possible_blueprints" Type="Self.recipe_possible_blueprints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recipe">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe_possible_blueprints">
+              <PropertyRef Name="BaseRecipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_possible_blueprints_recipe">
+          <End Role="recipe" Type="Self.recipe" Multiplicity="1" />
+          <End Role="recipe_possible_blueprints" Type="Self.recipe_possible_blueprints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recipe">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe_possible_blueprints">
+              <PropertyRef Name="RecipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_requirement_objects_types">
+          <End Role="objects_types" Type="Self.objects_types" Multiplicity="0..1" />
+          <End Role="recipe_requirement" Type="Self.recipe_requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects_types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe_requirement">
+              <PropertyRef Name="MaterialObjectTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_requirement_recipe">
+          <End Role="recipe" Type="Self.recipe" Multiplicity="0..1" />
+          <End Role="recipe_requirement" Type="Self.recipe_requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recipe">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe_requirement">
+              <PropertyRef Name="RecipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_result_objects_types">
+          <End Role="objects_types" Type="Self.objects_types" Multiplicity="0..1" />
+          <End Role="recipe" Type="Self.recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects_types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe">
+              <PropertyRef Name="ResultObjectTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_skill_type">
+          <End Role="skill_type" Type="Self.skill_type" Multiplicity="0..1" />
+          <End Role="recipe" Type="Self.recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skill_type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe">
+              <PropertyRef Name="SkillTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_starting_objects_types">
+          <End Role="objects_types" Type="Self.objects_types" Multiplicity="0..1" />
+          <End Role="recipe" Type="Self.recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects_types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe">
+              <PropertyRef Name="StartingToolsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_skill_type_skill_type">
+          <End Role="skill_type" Type="Self.skill_type" Multiplicity="0..1" />
+          <End Role="skill_type1" Type="Self.skill_type" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skill_type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="skill_type1">
+              <PropertyRef Name="Parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKObjectsTypesParentID">
+          <End Role="objects_types" Type="Self.objects_types" Multiplicity="0..1" />
+          <End Role="objects_types1" Type="Self.objects_types" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects_types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="objects_types1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LIF2ModelStoreContainer">
+          <EntitySet Name="effects" EntityType="Self.effects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="effects_sets" EntityType="Self.effects_sets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="objects_types" EntityType="Self.objects_types" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recipe" EntityType="Self.recipe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recipe_possible_blueprints" EntityType="Self.recipe_possible_blueprints" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="recipe_requirement" EntityType="Self.recipe_requirement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="skill_type" EntityType="Self.skill_type" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_effects_result_potion_objects_types" Association="Self.FK_effects_result_potion_objects_types">
+            <End Role="objects_types" EntitySet="objects_types" />
+            <End Role="effects" EntitySet="effects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_effects_result_preparation_objects_types" Association="Self.FK_effects_result_preparation_objects_types">
+            <End Role="objects_types" EntitySet="objects_types" />
+            <End Role="effects" EntitySet="effects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_effects_sets_effects_1" Association="Self.FK_effects_sets_effects_1">
+            <End Role="effects" EntitySet="effects" />
+            <End Role="effects_sets" EntitySet="effects_sets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_effects_sets_effects_2" Association="Self.FK_effects_sets_effects_2">
+            <End Role="effects" EntitySet="effects" />
+            <End Role="effects_sets" EntitySet="effects_sets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_effects_sets_effects_3" Association="Self.FK_effects_sets_effects_3">
+            <End Role="effects" EntitySet="effects" />
+            <End Role="effects_sets" EntitySet="effects_sets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_possible_blueprints_baserecipe" Association="Self.FK_recipe_possible_blueprints_baserecipe">
+            <End Role="recipe" EntitySet="recipe" />
+            <End Role="recipe_possible_blueprints" EntitySet="recipe_possible_blueprints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_possible_blueprints_recipe" Association="Self.FK_recipe_possible_blueprints_recipe">
+            <End Role="recipe" EntitySet="recipe" />
+            <End Role="recipe_possible_blueprints" EntitySet="recipe_possible_blueprints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_requirement_objects_types" Association="Self.FK_recipe_requirement_objects_types">
+            <End Role="objects_types" EntitySet="objects_types" />
+            <End Role="recipe_requirement" EntitySet="recipe_requirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_requirement_recipe" Association="Self.FK_recipe_requirement_recipe">
+            <End Role="recipe" EntitySet="recipe" />
+            <End Role="recipe_requirement" EntitySet="recipe_requirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_result_objects_types" Association="Self.FK_recipe_result_objects_types">
+            <End Role="objects_types" EntitySet="objects_types" />
+            <End Role="recipe" EntitySet="recipe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_skill_type" Association="Self.FK_recipe_skill_type">
+            <End Role="skill_type" EntitySet="skill_type" />
+            <End Role="recipe" EntitySet="recipe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_starting_objects_types" Association="Self.FK_recipe_starting_objects_types">
+            <End Role="objects_types" EntitySet="objects_types" />
+            <End Role="recipe" EntitySet="recipe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_skill_type_skill_type" Association="Self.FK_skill_type_skill_type">
+            <End Role="skill_type" EntitySet="skill_type" />
+            <End Role="skill_type1" EntitySet="skill_type" />
+          </AssociationSet>
+          <AssociationSet Name="FKObjectsTypesParentID" Association="Self.FKObjectsTypesParentID">
+            <End Role="objects_types" EntitySet="objects_types" />
+            <End Role="objects_types1" EntitySet="objects_types" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LIF2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="effect">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Effect_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ResultPreparationID" Type="Int32" />
+          <Property Name="ResultPotionID" Type="Int32" />
+          <Property Name="PlayerEffectID" Type="Int16" />
+          <NavigationProperty Name="objects_types" Relationship="Self.FK_effects_result_potion_objects_types" FromRole="effects" ToRole="objects_types" />
+          <NavigationProperty Name="objects_types1" Relationship="Self.FK_effects_result_preparation_objects_types" FromRole="effects" ToRole="objects_types" />
+          <NavigationProperty Name="effects_sets" Relationship="Self.FK_effects_sets_effects_1" FromRole="effects" ToRole="effects_sets" />
+          <NavigationProperty Name="effects_sets1" Relationship="Self.FK_effects_sets_effects_2" FromRole="effects" ToRole="effects_sets" />
+          <NavigationProperty Name="effects_sets2" Relationship="Self.FK_effects_sets_effects_3" FromRole="effects" ToRole="effects_sets" />
+        </EntityType>
+        <EntityType Name="effects_sets">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EffectID1" Type="Int16" Nullable="false" />
+          <Property Name="EffectID2" Type="Int16" />
+          <Property Name="EffectID3" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="effect" Relationship="Self.FK_effects_sets_effects_1" FromRole="effects_sets" ToRole="effects" />
+          <NavigationProperty Name="effect1" Relationship="Self.FK_effects_sets_effects_2" FromRole="effects_sets" ToRole="effects" />
+          <NavigationProperty Name="effect2" Relationship="Self.FK_effects_sets_effects_3" FromRole="effects_sets" ToRole="effects" />
+        </EntityType>
+        <EntityType Name="objects_types">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsContainer" Type="Int16" Nullable="false" />
+          <Property Name="IsMovableObject" Type="Int16" Nullable="false" />
+          <Property Name="IsUnmovableobject" Type="Int16" Nullable="false" />
+          <Property Name="IsTool" Type="Int16" Nullable="false" />
+          <Property Name="IsDevice" Type="Int16" Nullable="false" />
+          <Property Name="IsDoor" Type="Int16" Nullable="false" />
+          <Property Name="MaxContSize" Type="Int32" />
+          <Property Name="Length" Type="Int16" />
+          <Property Name="MaxStackSize" Type="Int32" />
+          <Property Name="UnitWeight" Type="Int32" />
+          <Property Name="BackgndImage" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="WorkAreaTop" Type="Int16" />
+          <Property Name="WorkAreaLeft" Type="Int16" />
+          <Property Name="WorkAreaWidth" Type="Int16" />
+          <Property Name="WorkAreaHeight" Type="Int16" />
+          <Property Name="BtnCloseTop" Type="Int16" />
+          <Property Name="BtnCloseLeft" Type="Int16" />
+          <Property Name="FaceImage" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="BasePrice" Type="Int32" />
+          <Property Name="OwnerTimeout" Type="Int32" />
+          <NavigationProperty Name="effects" Relationship="Self.FK_effects_result_potion_objects_types" FromRole="objects_types" ToRole="effects" />
+          <NavigationProperty Name="effects1" Relationship="Self.FK_effects_result_preparation_objects_types" FromRole="objects_types" ToRole="effects" />
+          <NavigationProperty Name="recipe_requirement" Relationship="Self.FK_recipe_requirement_objects_types" FromRole="objects_types" ToRole="recipe_requirement" />
+          <NavigationProperty Name="recipes" Relationship="Self.FK_recipe_result_objects_types" FromRole="objects_types" ToRole="recipe" />
+          <NavigationProperty Name="recipes1" Relationship="Self.FK_recipe_starting_objects_types" FromRole="objects_types" ToRole="recipe" />
+          <NavigationProperty Name="objects_types1" Relationship="Self.FKObjectsTypesParentID" FromRole="objects_types" ToRole="objects_types1" />
+          <NavigationProperty Name="objects_types2" Relationship="Self.FKObjectsTypesParentID" FromRole="objects_types1" ToRole="objects_types" />
+        </EntityType>
+        <EntityType Name="recipe">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="StartingToolsID" Type="Int32" />
+          <Property Name="SkillTypeID" Type="Int32" />
+          <Property Name="SkillLvl" Type="Int16" />
+          <Property Name="ResultObjectTypeID" Type="Int32" />
+          <Property Name="SkillDepends" Type="Int16" Nullable="false" />
+          <Property Name="Quantity" Type="Int16" Nullable="false" />
+          <Property Name="Autorepeat" Type="Int16" Nullable="false" />
+          <Property Name="IsBlueprint" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="objects_types" Relationship="Self.FK_recipe_result_objects_types" FromRole="recipe" ToRole="objects_types" />
+          <NavigationProperty Name="objects_types1" Relationship="Self.FK_recipe_starting_objects_types" FromRole="recipe" ToRole="objects_types" />
+          <NavigationProperty Name="recipe_possible_blueprints" Relationship="Self.FK_recipe_possible_blueprints_baserecipe" FromRole="recipe" ToRole="recipe_possible_blueprints" />
+          <NavigationProperty Name="recipe_possible_blueprints1" Relationship="Self.FK_recipe_possible_blueprints_recipe" FromRole="recipe" ToRole="recipe_possible_blueprints" />
+          <NavigationProperty Name="recipe_requirement" Relationship="Self.FK_recipe_requirement_recipe" FromRole="recipe" ToRole="recipe_requirement" />
+          <NavigationProperty Name="skill_type" Relationship="Self.FK_recipe_skill_type" FromRole="recipe" ToRole="skill_type" />
+        </EntityType>
+        <EntityType Name="recipe_possible_blueprints">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecipeID" Type="Int32" Nullable="false" />
+          <Property Name="BaseRecipeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="recipe" Relationship="Self.FK_recipe_possible_blueprints_baserecipe" FromRole="recipe_possible_blueprints" ToRole="recipe" />
+          <NavigationProperty Name="recipe1" Relationship="Self.FK_recipe_possible_blueprints_recipe" FromRole="recipe_possible_blueprints" ToRole="recipe" />
+        </EntityType>
+        <EntityType Name="recipe_requirement">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RecipeID" Type="Int32" />
+          <Property Name="MaterialObjectTypeID" Type="Int32" />
+          <Property Name="Quality" Type="Int16" />
+          <Property Name="Influence" Type="Int16" />
+          <Property Name="Quantity" Type="Int16" />
+          <Property Name="IsRegionItemRequired" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="objects_types" Relationship="Self.FK_recipe_requirement_objects_types" FromRole="recipe_requirement" ToRole="objects_types" />
+          <NavigationProperty Name="recipe" Relationship="Self.FK_recipe_requirement_recipe" FromRole="recipe_requirement" ToRole="recipe" />
+        </EntityType>
+        <EntityType Name="skill_type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Parent" Type="Int32" />
+          <Property Name="Group" Type="Int16" />
+          <Property Name="PrimaryStat" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="SecondaryStat" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="MasterMessageID" Type="Int32" />
+          <Property Name="GMMessageID" Type="Int32" />
+          <NavigationProperty Name="recipes" Relationship="Self.FK_recipe_skill_type" FromRole="skill_type" ToRole="recipe" />
+          <NavigationProperty Name="skill_type1" Relationship="Self.FK_skill_type_skill_type" FromRole="skill_type" ToRole="skill_type1" />
+          <NavigationProperty Name="skill_type2" Relationship="Self.FK_skill_type_skill_type" FromRole="skill_type1" ToRole="skill_type" />
+        </EntityType>
+        <Association Name="FK_effects_result_potion_objects_types">
+          <End Role="objects_types" Type="Self.objects_types" Multiplicity="0..1" />
+          <End Role="effects" Type="Self.effect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects_types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="effects">
+              <PropertyRef Name="ResultPotionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_effects_result_preparation_objects_types">
+          <End Role="objects_types" Type="Self.objects_types" Multiplicity="0..1" />
+          <End Role="effects" Type="Self.effect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects_types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="effects">
+              <PropertyRef Name="ResultPreparationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_effects_sets_effects_1">
+          <End Role="effects" Type="Self.effect" Multiplicity="1" />
+          <End Role="effects_sets" Type="Self.effects_sets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="effects">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="effects_sets">
+              <PropertyRef Name="EffectID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_effects_sets_effects_2">
+          <End Role="effects" Type="Self.effect" Multiplicity="0..1" />
+          <End Role="effects_sets" Type="Self.effects_sets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="effects">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="effects_sets">
+              <PropertyRef Name="EffectID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_effects_sets_effects_3">
+          <End Role="effects" Type="Self.effect" Multiplicity="1" />
+          <End Role="effects_sets" Type="Self.effects_sets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="effects">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="effects_sets">
+              <PropertyRef Name="EffectID3" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_requirement_objects_types">
+          <End Role="objects_types" Type="Self.objects_types" Multiplicity="0..1" />
+          <End Role="recipe_requirement" Type="Self.recipe_requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects_types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe_requirement">
+              <PropertyRef Name="MaterialObjectTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_result_objects_types">
+          <End Role="objects_types" Type="Self.objects_types" Multiplicity="0..1" />
+          <End Role="recipe" Type="Self.recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects_types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe">
+              <PropertyRef Name="ResultObjectTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_starting_objects_types">
+          <End Role="objects_types" Type="Self.objects_types" Multiplicity="0..1" />
+          <End Role="recipe" Type="Self.recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects_types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe">
+              <PropertyRef Name="StartingToolsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FKObjectsTypesParentID">
+          <End Role="objects_types" Type="Self.objects_types" Multiplicity="0..1" />
+          <End Role="objects_types1" Type="Self.objects_types" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="objects_types">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="objects_types1">
+              <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_possible_blueprints_baserecipe">
+          <End Role="recipe" Type="Self.recipe" Multiplicity="1" />
+          <End Role="recipe_possible_blueprints" Type="Self.recipe_possible_blueprints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recipe">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe_possible_blueprints">
+              <PropertyRef Name="BaseRecipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_possible_blueprints_recipe">
+          <End Role="recipe" Type="Self.recipe" Multiplicity="1" />
+          <End Role="recipe_possible_blueprints" Type="Self.recipe_possible_blueprints" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recipe">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe_possible_blueprints">
+              <PropertyRef Name="RecipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_requirement_recipe">
+          <End Role="recipe" Type="Self.recipe" Multiplicity="0..1" />
+          <End Role="recipe_requirement" Type="Self.recipe_requirement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="recipe">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe_requirement">
+              <PropertyRef Name="RecipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_recipe_skill_type">
+          <End Role="skill_type" Type="Self.skill_type" Multiplicity="0..1" />
+          <End Role="recipe" Type="Self.recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skill_type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="recipe">
+              <PropertyRef Name="SkillTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_skill_type_skill_type">
+          <End Role="skill_type" Type="Self.skill_type" Multiplicity="0..1" />
+          <End Role="skill_type1" Type="Self.skill_type" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skill_type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="skill_type1">
+              <PropertyRef Name="Parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LIF2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="effects" EntityType="Self.effect" />
+          <EntitySet Name="effects_sets" EntityType="Self.effects_sets" />
+          <EntitySet Name="objects_types" EntityType="Self.objects_types" />
+          <EntitySet Name="recipes" EntityType="Self.recipe" />
+          <EntitySet Name="recipe_possible_blueprints" EntityType="Self.recipe_possible_blueprints" />
+          <EntitySet Name="recipe_requirement" EntityType="Self.recipe_requirement" />
+          <EntitySet Name="skill_type" EntityType="Self.skill_type" />
+          <AssociationSet Name="FK_effects_result_potion_objects_types" Association="Self.FK_effects_result_potion_objects_types">
+            <End Role="objects_types" EntitySet="objects_types" />
+            <End Role="effects" EntitySet="effects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_effects_result_preparation_objects_types" Association="Self.FK_effects_result_preparation_objects_types">
+            <End Role="objects_types" EntitySet="objects_types" />
+            <End Role="effects" EntitySet="effects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_effects_sets_effects_1" Association="Self.FK_effects_sets_effects_1">
+            <End Role="effects" EntitySet="effects" />
+            <End Role="effects_sets" EntitySet="effects_sets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_effects_sets_effects_2" Association="Self.FK_effects_sets_effects_2">
+            <End Role="effects" EntitySet="effects" />
+            <End Role="effects_sets" EntitySet="effects_sets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_effects_sets_effects_3" Association="Self.FK_effects_sets_effects_3">
+            <End Role="effects" EntitySet="effects" />
+            <End Role="effects_sets" EntitySet="effects_sets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_requirement_objects_types" Association="Self.FK_recipe_requirement_objects_types">
+            <End Role="objects_types" EntitySet="objects_types" />
+            <End Role="recipe_requirement" EntitySet="recipe_requirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_result_objects_types" Association="Self.FK_recipe_result_objects_types">
+            <End Role="objects_types" EntitySet="objects_types" />
+            <End Role="recipe" EntitySet="recipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_starting_objects_types" Association="Self.FK_recipe_starting_objects_types">
+            <End Role="objects_types" EntitySet="objects_types" />
+            <End Role="recipe" EntitySet="recipes" />
+          </AssociationSet>
+          <AssociationSet Name="FKObjectsTypesParentID" Association="Self.FKObjectsTypesParentID">
+            <End Role="objects_types" EntitySet="objects_types" />
+            <End Role="objects_types1" EntitySet="objects_types" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_possible_blueprints_baserecipe" Association="Self.FK_recipe_possible_blueprints_baserecipe">
+            <End Role="recipe" EntitySet="recipes" />
+            <End Role="recipe_possible_blueprints" EntitySet="recipe_possible_blueprints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_possible_blueprints_recipe" Association="Self.FK_recipe_possible_blueprints_recipe">
+            <End Role="recipe" EntitySet="recipes" />
+            <End Role="recipe_possible_blueprints" EntitySet="recipe_possible_blueprints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_requirement_recipe" Association="Self.FK_recipe_requirement_recipe">
+            <End Role="recipe" EntitySet="recipes" />
+            <End Role="recipe_requirement" EntitySet="recipe_requirement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_recipe_skill_type" Association="Self.FK_recipe_skill_type">
+            <End Role="skill_type" EntitySet="skill_type" />
+            <End Role="recipe" EntitySet="recipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_skill_type_skill_type" Association="Self.FK_skill_type_skill_type">
+            <End Role="skill_type" EntitySet="skill_type" />
+            <End Role="skill_type1" EntitySet="skill_type" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LIF2ModelStoreContainer" CdmEntityContainer="LIF2Entities">
+          <EntitySetMapping Name="effects">
+            <EntityTypeMapping TypeName="LIF2Model.effect">
+              <MappingFragment StoreEntitySet="effects">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Effect_name" ColumnName="Effect_name" />
+                <ScalarProperty Name="ResultPreparationID" ColumnName="ResultPreparationID" />
+                <ScalarProperty Name="ResultPotionID" ColumnName="ResultPotionID" />
+                <ScalarProperty Name="PlayerEffectID" ColumnName="PlayerEffectID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="effects_sets">
+            <EntityTypeMapping TypeName="LIF2Model.effects_sets">
+              <MappingFragment StoreEntitySet="effects_sets">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EffectID1" ColumnName="EffectID1" />
+                <ScalarProperty Name="EffectID2" ColumnName="EffectID2" />
+                <ScalarProperty Name="EffectID3" ColumnName="EffectID3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="objects_types">
+            <EntityTypeMapping TypeName="LIF2Model.objects_types">
+              <MappingFragment StoreEntitySet="objects_types">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsContainer" ColumnName="IsContainer" />
+                <ScalarProperty Name="IsMovableObject" ColumnName="IsMovableObject" />
+                <ScalarProperty Name="IsUnmovableobject" ColumnName="IsUnmovableobject" />
+                <ScalarProperty Name="IsTool" ColumnName="IsTool" />
+                <ScalarProperty Name="IsDevice" ColumnName="IsDevice" />
+                <ScalarProperty Name="IsDoor" ColumnName="IsDoor" />
+                <ScalarProperty Name="MaxContSize" ColumnName="MaxContSize" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="MaxStackSize" ColumnName="MaxStackSize" />
+                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
+                <ScalarProperty Name="BackgndImage" ColumnName="BackgndImage" />
+                <ScalarProperty Name="WorkAreaTop" ColumnName="WorkAreaTop" />
+                <ScalarProperty Name="WorkAreaLeft" ColumnName="WorkAreaLeft" />
+                <ScalarProperty Name="WorkAreaWidth" ColumnName="WorkAreaWidth" />
+                <ScalarProperty Name="WorkAreaHeight" ColumnName="WorkAreaHeight" />
+                <ScalarProperty Name="BtnCloseTop" ColumnName="BtnCloseTop" />
+                <ScalarProperty Name="BtnCloseLeft" ColumnName="BtnCloseLeft" />
+                <ScalarProperty Name="FaceImage" ColumnName="FaceImage" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="BasePrice" ColumnName="BasePrice" />
+                <ScalarProperty Name="OwnerTimeout" ColumnName="OwnerTimeout" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recipes">
+            <EntityTypeMapping TypeName="LIF2Model.recipe">
+              <MappingFragment StoreEntitySet="recipe">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StartingToolsID" ColumnName="StartingToolsID" />
+                <ScalarProperty Name="SkillTypeID" ColumnName="SkillTypeID" />
+                <ScalarProperty Name="SkillLvl" ColumnName="SkillLvl" />
+                <ScalarProperty Name="ResultObjectTypeID" ColumnName="ResultObjectTypeID" />
+                <ScalarProperty Name="SkillDepends" ColumnName="SkillDepends" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Autorepeat" ColumnName="Autorepeat" />
+                <ScalarProperty Name="IsBlueprint" ColumnName="IsBlueprint" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recipe_possible_blueprints">
+            <EntityTypeMapping TypeName="LIF2Model.recipe_possible_blueprints">
+              <MappingFragment StoreEntitySet="recipe_possible_blueprints">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+                <ScalarProperty Name="BaseRecipeID" ColumnName="BaseRecipeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="recipe_requirement">
+            <EntityTypeMapping TypeName="LIF2Model.recipe_requirement">
+              <MappingFragment StoreEntitySet="recipe_requirement">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+                <ScalarProperty Name="MaterialObjectTypeID" ColumnName="MaterialObjectTypeID" />
+                <ScalarProperty Name="Quality" ColumnName="Quality" />
+                <ScalarProperty Name="Influence" ColumnName="Influence" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="IsRegionItemRequired" ColumnName="IsRegionItemRequired" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="skill_type">
+            <EntityTypeMapping TypeName="LIF2Model.skill_type">
+              <MappingFragment StoreEntitySet="skill_type">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Parent" ColumnName="Parent" />
+                <ScalarProperty Name="Group" ColumnName="Group" />
+                <ScalarProperty Name="PrimaryStat" ColumnName="PrimaryStat" />
+                <ScalarProperty Name="SecondaryStat" ColumnName="SecondaryStat" />
+                <ScalarProperty Name="MasterMessageID" ColumnName="MasterMessageID" />
+                <ScalarProperty Name="GMMessageID" ColumnName="GMMessageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
