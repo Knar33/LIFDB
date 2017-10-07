@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LIFDB", "LIFDB\LIFDB.csproj", "{91723107-7BEB-44A6-8514-266045CA2529}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DBSchema", "DBSchema\DBSchema.sqlproj", "{42ACC3F8-AEED-4FFB-B887-B4B27CC609CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,12 @@ Global
 		{91723107-7BEB-44A6-8514-266045CA2529}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91723107-7BEB-44A6-8514-266045CA2529}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91723107-7BEB-44A6-8514-266045CA2529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42ACC3F8-AEED-4FFB-B887-B4B27CC609CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42ACC3F8-AEED-4FFB-B887-B4B27CC609CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42ACC3F8-AEED-4FFB-B887-B4B27CC609CD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{42ACC3F8-AEED-4FFB-B887-B4B27CC609CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42ACC3F8-AEED-4FFB-B887-B4B27CC609CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42ACC3F8-AEED-4FFB-B887-B4B27CC609CD}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

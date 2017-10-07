@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ae657804b2d14eb89f43f86579cf564c" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="LIF2Model.effect" Width="1.5" PointX="11.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LIF2Model.effects_sets" Width="1.5" PointX="13.375" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LIF2Model.objects_types" Width="1.5" PointX="9.375" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LIF2Model.recipe" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LIF2Model.recipe_possible_blueprints" Width="1.5" PointX="7.375" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LIF2Model.recipe_requirement" Width="1.5" PointX="7.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LIF2Model.skill_type" Width="1.5" PointX="3.25" PointY="7.625" IsExpanded="true" />
+        <AssociationConnector Association="LIF2Model.FK_effects_result_potion_objects_types" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FK_effects_result_preparation_objects_types" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FK_effects_sets_effects_1" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FK_effects_sets_effects_2" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FK_effects_sets_effects_3" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FK_recipe_requirement_objects_types" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FK_recipe_result_objects_types" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FK_recipe_starting_objects_types" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FKObjectsTypesParentID" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FK_recipe_possible_blueprints_baserecipe" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FK_recipe_possible_blueprints_recipe" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FK_recipe_requirement_recipe" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FK_recipe_skill_type" ManuallyRouted="false" />
+        <AssociationConnector Association="LIF2Model.FK_skill_type_skill_type" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
