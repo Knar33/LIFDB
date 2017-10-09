@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LIFDB
+namespace LIFDB.Models
 {
     using System;
     using System.Collections.Generic;

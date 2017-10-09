@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.indented {
+    border-left: 3px solid gray;
+    padding-left: 20px;
+    margin-left: 10px;
+}

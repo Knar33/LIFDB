@@ -7,20 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LIFDB
+namespace LIFDB.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class effects_sets
+    public partial class recipe_requirement
     {
         public int ID { get; set; }
-        public short EffectID1 { get; set; }
-        public Nullable<short> EffectID2 { get; set; }
-        public short EffectID3 { get; set; }
+        public Nullable<int> RecipeID { get; set; }
+        public Nullable<int> MaterialObjectTypeID { get; set; }
+        public Nullable<short> Quality { get; set; }
+        public Nullable<short> Influence { get; set; }
+        public Nullable<short> Quantity { get; set; }
+        public short IsRegionItemRequired { get; set; }
     
-        public virtual effect effect { get; set; }
-        public virtual effect effect1 { get; set; }
-        public virtual effect effect2 { get; set; }
+        public virtual objects_types objects_types { get; set; }
+        public virtual recipe recipe { get; set; }
     }
 }

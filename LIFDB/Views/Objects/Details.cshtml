@@ -1,0 +1,39 @@
+﻿@model IQueryable<LIFDB.Models.objects_types>
+@{
+    ViewBag.Title = "Details";
+}
+@if (Model != null)
+{
+    foreach (var obj in Model)
+    {
+        <div>
+            Name: @obj.Name<br />
+            ID: @obj.ID<br />
+            Weight: @obj.UnitWeight<text>g</text><br />
+        </div>
+        <div>
+            Recipes:
+            @foreach (var obj2 in obj.recipes.Where(x => x.ResultObjectTypeID == obj.ID))
+            {
+                <div style="padding-left: 30px;">
+                    Requires: @obj2.skill_type.Name level @obj2.SkillLvl<br />
+                    @foreach (var obj3 in obj2.recipe_requirement)
+                    {
+                        if (obj3.objects_types.IsDevice == 1)
+                        {
+                            <text>Device: </text>@obj3.Quantity <text>Durability</text> @obj3.objects_types.Name<br />
+                        }
+                        else if(obj3.objects_types.IsTool == 1)
+                        {
+                            <text>Tool: </text>@obj3.Quantity <text>Durability</text> @obj3.objects_types.Name<br />
+                        }
+                        else
+                        {
+                            @obj3.Quantity<text>x</text> @obj3.objects_types.Name<br />
+                        }
+                    }
+                </div>
+            }
+        </div>
+    }
+}
