@@ -7,22 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LIFDB
+namespace LIFDB.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class recipe_requirement
+    public partial class recipe_possible_blueprints
     {
         public int ID { get; set; }
-        public Nullable<int> RecipeID { get; set; }
-        public Nullable<int> MaterialObjectTypeID { get; set; }
-        public Nullable<short> Quality { get; set; }
-        public Nullable<short> Influence { get; set; }
-        public Nullable<short> Quantity { get; set; }
-        public short IsRegionItemRequired { get; set; }
+        public int RecipeID { get; set; }
+        public int BaseRecipeID { get; set; }
     
-        public virtual objects_types objects_types { get; set; }
         public virtual recipe recipe { get; set; }
+        public virtual recipe recipe1 { get; set; }
     }
 }

@@ -1,0 +1,115 @@
+﻿@model IQueryable<LIFDB.Models.objects_types>
+@{
+    ViewBag.Title = "Index";
+    var i = 0;
+    var id = "";
+}
+@foreach (var obj in Model.Where(x => x.ID == 2))
+{
+    i++;
+    id = "demo" + i;    
+    <div style="padding-left: 10;">
+        @if (Model.Where(x => x.ParentID == obj.ID).Count() > 0) {
+            <a href="#@i" class="btn btn-primary" data-toggle="collapse">@obj.Name</a><br />
+            <div id="@i" class="collapse indented">
+                @foreach (var obj2 in Model.Where(x => x.ParentID == obj.ID))
+                {
+                    if (Model.Where(x => x.ParentID == obj2.ID).Count() > 0)
+                    {
+                        i++;
+                        <a href="#@i" class="btn btn-primary" data-toggle="collapse">@obj2.Name</a><br />
+                        <div id="@i" class="collapse indented">
+                            @foreach (var obj3 in Model.Where(x => x.ParentID == obj2.ID))
+                            {
+                                if (Model.Where(x => x.ParentID == obj3.ID).Count() > 0)
+                                {
+                                    i++;
+                                    <a href="#@i" class="btn btn-primary" data-toggle="collapse">@obj3.Name</a><br />
+                                    <div id="@i" class="collapse indented">
+                                        @foreach (var obj4 in Model.Where(x => x.ParentID == obj3.ID))
+                                        {
+                                            if (Model.Where(x => x.ParentID == obj4.ID).Count() > 0)
+                                            {
+                                                i++;
+                                                <a href="#@i" class="btn btn-primary" data-toggle="collapse">@obj4.Name</a><br />
+                                                <div id="@i" class="collapse indented">
+                                                    @foreach (var obj5 in Model.Where(x => x.ParentID == obj4.ID))
+                                                    {
+                                                        if (Model.Where(x => x.ParentID == obj5.ID).Count() > 0)
+                                                        {
+                                                            i++;
+                                                            <a href="#@i" class="btn btn-primary" data-toggle="collapse">@obj5.Name</a><br />
+                                                            <div id="@i" class="collapse indented">
+                                                                @foreach (var obj6 in Model.Where(x => x.ParentID == obj5.ID))
+                                                                {
+                                                                    if (Model.Where(x => x.ParentID == obj6.ID).Count() > 0)
+                                                                    {
+                                                                        i++;
+                                                                        <a href="#@i" class="btn btn-primary" data-toggle="collapse">@obj6.Name</a><br />
+                                                                        <div id="@i" class="collapse indented">
+                                                                            @foreach (var obj7 in Model.Where(x => x.ParentID == obj6.ID))
+                                                                            {
+                                                                                if (Model.Where(x => x.ParentID == obj7.ID).Count() > 0)
+                                                                                {
+                                                                                    i++;
+                                                                                    <a href="#@i" class="btn btn-primary" data-toggle="collapse">@obj7.Name</a><br />
+                                                                                    <div id="@i" class="collapse indented">
+                                                                                        @foreach (var obj8 in Model.Where(x => x.ParentID == obj7.ID))
+                                                                                        {
+                                                                                            if (Model.Where(x => x.ParentID == obj8.ID).Count() > 0)
+                                                                                            {
+                                                                                                i++;
+                                                                                                <a href="/Objects/details/@obj8.ID">@obj8.Name</a><br />
+                                                                                            }
+                                                                                        }
+                                                                                    </div>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <a href="/Objects/details/@obj7.ID">@obj7.Name</a><br />
+                                                                                }
+                                                                            }
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a href="/Objects/details/@obj6.ID">@obj6.Name</a><br />
+                                                                    }
+                                                                }
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="/Objects/details/@obj5.ID">@obj5.Name</a><br />
+                                                        }
+                                                    }
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <a href="/Objects/details/@obj4.ID">@obj4.Name</a><br />
+                                            }
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <a href="/Objects/details/@obj3.ID">@obj3.Name</a><br />
+                                }
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="/Objects/details/@obj2.ID">@obj2.Name</a><br />
+                    }
+                }
+            </div>
+        }
+        else
+        {
+            <a href="/Objects/details/@obj.ID">@obj.Name</a><br />
+        }
+    </div>
+}
+
